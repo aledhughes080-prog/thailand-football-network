@@ -84,20 +84,81 @@
 
   <footer class="footer"><div class="container"><div class="footer-main"><div><a href="#top" class="brand"><span class="mark">TFN</span><span class="brand-text">THAILAND FOOTBALL <small>NETWORK</small></span></a><p class="footer-desc">A more informed pathway into Thai football. Built on honest assessment, professional preparation and first-hand experience.</p></div><div><h4>Explore</h4><ul><li><a href="#about">About the network</a></li><li><a href="#why">Why Thailand</a></li><li><a href="#how">The pathway</a></li><li><a href="#offers">Player services</a></li><li><a href="#team">Our people</a></li></ul></div><div><h4>Get involved</h4><ul><li><a href="#apply">Player assessment</a></li><li><a href="#other-roles">Coaches & other roles</a></li><li><a href="#faq">Frequently asked questions</a></li><li><a href="coach-login.html">Coach login ↗</a></li><li><button type="button" data-open="General Enquiry" style="border:0;background:none;color:#b8c7bb;padding:0;text-align:left;cursor:pointer">Start a conversation ↗</button></li></ul></div></div><div class="footer-bottom"><span>© 2026 Thailand Football Network. Landing-page concept. Proposed offers, prices and illustrative quotes require approval before launch.</span><span>Independent preparation and advisory services are not a guarantee of recruitment, representation or immigration status.</span></div></div></footer>
 
-<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true"><div class="modal" id="modal"><button class="close" type="button" id="close" aria-label="Close application form">×</button><div id="form-panel"><div class="section-eyeline">TELL US YOUR STORY</div><h2 id="modal-title">Start with an <em class="serif">honest assessment.</em></h2><p>Submit the details below to create an application summary. This preview does <strong>not</strong> send or save your data online — you can copy it or open an email draft to share with the team.</p><form id="appform"><div class="formgrid"><div class="field"><label for="name">Full name *</label><input id="name" name="Full name" autocomplete="name" placeholder="Your full name" required></div><div class="field"><label for="email">Email address *</label><input type="email" id="email" name="Email" autocomplete="email" placeholder="you@example.com" required></div><div class="field"><label for="pathway">What are you enquiring about? *</label><select id="pathway" name="Interested in" required><option value="Reality Check">Thailand Reality Check</option><option value="Club-Ready Sprint">Club-Ready Sprint</option><option value="Pro Pathway">Thailand Pro Pathway</option><option value="Other Football Role">Coaching / analysis / other football role</option><option value="General Enquiry">General enquiry</option></select></div><div class="field"><label for="residence">Current country</label><input id="residence" name="Current country" placeholder="e.g. United Kingdom"></div><div class="field"><label for="position">Playing position / professional role</label><input id="position" name="Position / role" placeholder="e.g. Right winger / coach"></div><div class="field"><label for="experience">Current / most recent club</label><input id="experience" name="Current / latest club" placeholder="Club and division"></div><div class="field"><label for="level">Highest playing level</label><select id="level" name="Highest level"><option value="Not provided">Select your level</option><option>Full-time professional</option><option>Semi-professional</option><option>Senior amateur</option><option>Elite academy / U21 / university</option><option>Other / not applicable</option></select></div><div class="field"><label for="footage">Recent match footage available?</label><select id="footage" name="Match footage"><option>Not sure / not applicable</option><option>Yes — full matches</option><option>Yes — highlights only</option><option>No</option></select></div><div class="field full"><label for="links">Player CV / video / LinkedIn links</label><input type="text" id="links" name="Portfolio links" placeholder="Links to your footage, profile or CV"></div><div class="field full"><label for="message">Why Thailand? What are your goals?</label><textarea id="message" name="Goals" rows="4" placeholder="Tell us a little about your experience, ambitions and preferred timeline"></textarea></div></div><div class="form-actions"><button class="btn ink" type="submit">PREPARE MY APPLICATION <span class="arrow">↗</span></button><span style="font-size:10px;color:#637266">* Required fields</span></div></form></div><div id="success" class="success"><div class="section-eyeline">APPLICATION PREPARED</div><h2>Your next step <em class="serif">starts here.</em></h2><p>Your application summary is ready below. Copy it and send it to the team, or open an email draft. <strong>No details have been submitted automatically.</strong></p><pre id="summary"></pre><button class="btn ink" id="copy" type="button">COPY APPLICATION</button><button class="btn outline" id="emaildraft" type="button">OPEN EMAIL DRAFT ↗</button><button class="btn outline" id="back" type="button">EDIT DETAILS</button><p class="formnote">Before the live launch, connect this form to a secure email inbox or form service and add a privacy notice. There is no live submission system in this concept page.</p></div></div></div>
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true"><div class="modal" id="modal"><button class="close" type="button" id="close" aria-label="Close application form">×</button><div id="form-panel"><div class="section-eyeline">TELL US YOUR STORY</div><h2 id="modal-title">Start with an <em class="serif">honest assessment.</em></h2><p>Tell us about your football experience and what you’re looking for in Thailand. We’ll store your application privately and use the details you share to review your enquiry and contact you.</p><form id="appform"><div class="formgrid"><div class="field"><label for="name">Full name *</label><input id="name" maxlength="120" name="Full name" autocomplete="name" placeholder="Your full name" required></div><div class="field"><label for="email">Email address *</label><input type="email" id="email" maxlength="254" name="Email" autocomplete="email" placeholder="you@example.com" required></div><div class="field"><label for="pathway">What are you enquiring about? *</label><select id="pathway" name="Interested in" required><option value="Reality Check">Thailand Reality Check</option><option value="Club-Ready Sprint">Club-Ready Sprint</option><option value="Pro Pathway">Thailand Pro Pathway</option><option value="Other Football Role">Coaching / analysis / other football role</option><option value="General Enquiry">General enquiry</option></select></div><div class="field"><label for="residence">Current country</label><input id="residence" maxlength="120" name="Current country" placeholder="e.g. United Kingdom"></div><div class="field"><label for="position">Playing position / professional role</label><input id="position" maxlength="160" name="Position / role" placeholder="e.g. Right winger / coach"></div><div class="field"><label for="experience">Current / most recent club</label><input id="experience" maxlength="160" name="Current / latest club" placeholder="Club and division"></div><div class="field"><label for="level">Highest playing level</label><select id="level" name="Highest level"><option value="Not provided">Select your level</option><option>Full-time professional</option><option>Semi-professional</option><option>Senior amateur</option><option>Elite academy / U21 / university</option><option>Other / not applicable</option></select></div><div class="field"><label for="footage">Recent match footage available?</label><select id="footage" name="Match footage"><option>Not sure / not applicable</option><option>Yes — full matches</option><option>Yes — highlights only</option><option>No</option></select></div><div class="field full"><label for="links">Player CV / video / LinkedIn links</label><input type="text" id="links" maxlength="2000" name="Portfolio links" placeholder="Links to your footage, profile or CV"></div><div class="field full"><label for="message">Why Thailand? What are your goals?</label><textarea id="message" maxlength="4000" name="Goals" rows="4" placeholder="Tell us a little about your experience, ambitions and preferred timeline"></textarea></div></div><p id="submit-error" role="alert" hidden style="color:#892e26"></p><div class="form-actions"><button id="send-application" class="btn ink" type="submit"><span id="submit-label">SUBMIT MY APPLICATION</span> <span class="arrow">↗</span></button><span style="font-size:10px;color:#637266">* Required fields</span></div></form></div><div id="success" class="success"><div class="section-eyeline">APPLICATION RECEIVED</div><h2 id="receipt-title" tabindex="-1">We’ve received <em class="serif">your application.</em></h2><p>Thank you for getting in touch with Thailand Football Network. The team can now review your enquiry. You can copy a summary for your records.</p><pre id="summary"></pre><button class="btn ink" id="copy" type="button">COPY APPLICATION</button><button class="btn outline" id="done" type="button">DONE</button></div></div></div>
 <script>
 (function(){
  const overlay=document.getElementById('overlay'),form=document.getElementById('appform'),sel=document.getElementById('pathway'),panel=document.getElementById('form-panel'),success=document.getElementById('success'),summary=document.getElementById('summary');
  let lastFocus=null;
- function openForm(option){lastFocus=document.activeElement;sel.value=option||'Pro Pathway';panel.style.display='block';success.style.display='none';overlay.classList.add('open');overlay.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';setTimeout(()=>document.getElementById('name').focus(),30)}
- function closeForm(){overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');document.body.style.overflow='';if(lastFocus&&lastFocus.focus)lastFocus.focus()}
+ const submitButton = document.getElementById('send-application');
+ const submitLabel = document.getElementById('submit-label');
+ const submitError = document.getElementById('submit-error');
+ const receiptTitle = document.getElementById('receipt-title');
+ let inFlight = false;
+ let previousAttempt = null;
+ function openForm(option){lastFocus=document.activeElement;submitError.hidden=true;sel.value=option||'Pro Pathway';panel.style.display='block';success.style.display='none';overlay.classList.add('open');overlay.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';setTimeout(()=>document.getElementById('name').focus(),30)}
+ function closeForm(){if(inFlight)return;overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');document.body.style.overflow='';if(lastFocus&&lastFocus.focus)lastFocus.focus()}
  document.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',()=>openForm(b.dataset.open)));
  document.getElementById('close').addEventListener('click',closeForm);overlay.addEventListener('click',e=>{if(e.target===overlay)closeForm()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&overlay.classList.contains('open'))closeForm()});
  const menu=document.getElementById('mobile-panel'),menuButton=document.getElementById('menubtn');menuButton.addEventListener('click',()=>{const next=!menu.classList.contains('open');menu.classList.toggle('open',next);menuButton.setAttribute('aria-expanded',String(next));menuButton.textContent=next?'×':'☰'});menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.classList.remove('open');menuButton.setAttribute('aria-expanded','false');menuButton.textContent='☰'}));
- form.addEventListener('submit',e=>{e.preventDefault();if(!form.reportValidity())return;const fields=[...new FormData(form).entries()];const s='THAILAND FOOTBALL NETWORK — APPLICATION REQUEST\n\n'+fields.map(([k,v])=>`${k}: ${v||'Not supplied'}`).join('\n')+'\n\nPlease get back to me about next steps.';summary.textContent=s;panel.style.display='none';success.style.display='block';document.getElementById('modal').scrollTop=0});
- document.getElementById('back').addEventListener('click',()=>{panel.style.display='block';success.style.display='none'});
+ form.addEventListener('submit', async (event) => {
+   event.preventDefault();
+   if (inFlight || !form.reportValidity()) return;
+   const value = (id) => document.getElementById(id).value.trim();
+   if (!value('name')) {
+     document.getElementById('name').value = '';
+     form.reportValidity();
+     return;
+   }
+   const application = {
+     full_name: value('name'), email: value('email'), pathway: value('pathway'),
+     country: value('residence') || null, position_or_role: value('position') || null,
+     recent_club: value('experience') || null,
+     highest_level: value('level') === 'Not provided' ? null : value('level'),
+     match_footage: value('footage') || null, portfolio_links: value('links') || null,
+     goals: value('message') || null
+   };
+   const signature = JSON.stringify(application);
+   const retry = previousAttempt && previousAttempt.signature === signature;
+   if (!retry) previousAttempt = {signature, id: crypto.randomUUID()};
+   const fields = [...new FormData(form).entries()];
+   const controller = new AbortController();
+   const timeout = setTimeout(() => controller.abort(), 15000);
+   inFlight = true;
+   form.querySelector('.formgrid').inert = true;
+   submitButton.disabled = true;
+   submitLabel.textContent = 'SUBMITTING…';
+   submitError.hidden = true;
+   try {
+     const response = await fetch('https://gwesqhhzbiiorkcozoaa.supabase.co/rest/v1/tfn_applications', {
+       method: 'POST',
+       headers: {'Content-Type': 'application/json', apikey: 'sb_publishable_cTrbRlxGMSPh2Jt_CuAOUw_Q-T1h5Bq', Prefer: 'return=minimal'},
+       body: JSON.stringify({id: previousAttempt.id, ...application}), signal: controller.signal
+     });
+     if (!response.ok) {
+       const issue = await response.json().catch(() => ({}));
+       if (!(retry && response.status === 409 && issue.code === '23505')) throw new Error('Submission failed');
+     }
+     summary.textContent = fields.map(([label, entry]) => label + ': ' + (entry.trim() || 'Not supplied')).join('\n');
+     form.reset();
+     previousAttempt = null;
+     panel.style.display = 'none';
+     success.style.display = 'block';
+     document.getElementById('modal').scrollTop = 0;
+     receiptTitle.focus();
+   } catch {
+     submitError.textContent = 'We couldn’t confirm your submission. Your details are still here. Please try again.';
+     submitError.hidden = false;
+   } finally {
+     clearTimeout(timeout);
+     inFlight = false;
+     form.querySelector('.formgrid').inert = false;
+     submitButton.disabled = false;
+     submitLabel.textContent = 'SUBMIT MY APPLICATION';
+   }
+ });
+ document.getElementById('done').addEventListener('click', closeForm);
  document.getElementById('copy').addEventListener('click',async()=>{try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(summary.textContent)}else{const t=document.createElement('textarea');t.value=summary.textContent;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove()}document.getElementById('copy').textContent='COPIED ✓';setTimeout(()=>document.getElementById('copy').textContent='COPY APPLICATION',2500)}catch(e){window.prompt('Copy your application below:',summary.textContent)}});
- document.getElementById('emaildraft').addEventListener('click',()=>{const subject='Thailand Football Network — '+sel.value+' enquiry';window.location.href='mailto:?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(summary.textContent)});
+
 })();
 </script>
 </body>
