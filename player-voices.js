@@ -92,10 +92,12 @@
         ${p.previously ? `<p class="voice-prev">Previously: ${esc(p.previously)}</p>` : ''}
         <div class="voice-qa">
           ${QUESTIONS.map(([q, hint], n) => `
-            <details${n === 0 ? ' open' : ''}>
+            <details${n === 0 ? ' open class="is-open"' : ''}>
               <summary><span>${String(n + 1).padStart(2, '0')}</span>${esc(q)}</summary>
-              ${hint ? `<p class="voice-hint">${esc(hint)}</p>` : ''}
-              <blockquote>“${esc(p.answers[n])}”</blockquote>
+              <div class="voice-ans">
+                ${hint ? `<p class="voice-hint">${esc(hint)}</p>` : ''}
+                <blockquote>“${esc(p.answers[n])}”</blockquote>
+              </div>
             </details>`).join('')}
         </div>
       </div>
@@ -138,8 +140,33 @@
   window.addEventListener('resize', update);
   update();
 
-  // Only one answer open at a time per card, so each card stays a tidy size.
-  root.querySelectorAll('.voice-qa').forEach((qa) => qa.addEventListener('toggle', (e) => {
-    if (e.target.open) qa.querySelectorAll('details').forEach((d) => { if (d !== e.target) d.open = false; });
-  }, true));
+  // Answers slide open and closed smoothly. Only one answer is open at a
+  // time per card, so opening a question slides the previous one shut.
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function slide(d, open) {
+    const body = d.querySelector('.voice-ans');
+    // Start from the answer's current height, so a click mid-slide reverses smoothly.
+    const from = d.open ? body.getBoundingClientRect().height : 0;
+    if (d._slide) d._slide.cancel();
+    d.open = true; // must be open to measure the full height
+    d.classList.toggle('is-open', open); // turns the + into a − straight away
+    if (reduceMotion) { d.open = open; return; }
+    const to = open ? body.scrollHeight : 0;
+    const anim = body.animate(
+      [{ height: from + 'px', opacity: open && !from ? 0 : 1 }, { height: to + 'px', opacity: open ? 1 : 0 }],
+      // A closing answer holds at zero height until it is hidden, so it never flashes back open.
+      { duration: open ? 380 : 280, easing: 'cubic-bezier(.25,.8,.25,1)', fill: open ? 'none' : 'forwards' }
+    );
+    d._slide = anim;
+    anim.onfinish = () => { d._slide = null; if (!open) { d.open = false; anim.cancel(); } };
+  }
+  root.querySelectorAll('.voice-qa').forEach((qa) => qa.addEventListener('click', (e) => {
+    const summary = e.target.closest('summary');
+    if (!summary || !qa.contains(summary)) return;
+    e.preventDefault(); // we open/close it ourselves so it can slide
+    const d = summary.parentElement;
+    const opening = !d.classList.contains('is-open');
+    if (opening) qa.querySelectorAll('details.is-open').forEach((o) => { if (o !== d) slide(o, false); });
+    slide(d, opening);
+  }));
 })();
