@@ -8,6 +8,7 @@
    add their photo to assets/, and keep the same five questions.
    Optional: photoPosition (how the photo is cropped), photoCaption (if the
    photo shows a different club from their current one), playedIn.
+   Cards start closed (photo only); clicking the photo slides the story open.
    Age is worked out from `dob`, so it stays correct every year.
    ============================================================ */
 (function () {
@@ -78,7 +79,17 @@
 
   const card = (p, i) => `
     <article class="voice-card" aria-label="${esc(p.name)}">
-      <figure class="voice-photo"><img src="${esc(p.photo)}" alt="${esc(p.photoAlt)}" loading="lazy"${p.photoPosition ? ` style="object-position:${esc(p.photoPosition)}"` : ''}><figcaption>${esc(p.photoCaption || p.team)}</figcaption></figure>
+      <button type="button" class="voice-photo" aria-expanded="false" aria-controls="voice-story-${i}">
+        <img src="${esc(p.photo)}" alt="${esc(p.photoAlt)}" loading="lazy"${p.photoPosition ? ` style="object-position:${esc(p.photoPosition)}"` : ''}>
+        <span class="voice-tag">${esc(p.photoCaption || p.team)}</span>
+        <span class="voice-cover">
+          <span class="voice-kicker">Player story ${String(i + 1).padStart(2, '0')}</span>
+          <span class="voice-cover-name">${esc(p.name)}</span>
+          <span class="voice-cover-meta">${esc(p.nationality)} · ${esc(p.position)}</span>
+          <span class="voice-cta"><span class="voice-cta-open">Read ${esc(p.name.split(' ')[0])}’s story</span><span class="voice-cta-close">Close story</span><i aria-hidden="true">→</i></span>
+        </span>
+      </button>
+      <div class="voice-panel" id="voice-story-${i}" inert>
       <div class="voice-body">
         <div class="voice-kicker">Player story ${String(i + 1).padStart(2, '0')}</div>
         <h3>${esc(p.name)}</h3>
@@ -100,6 +111,7 @@
               </div>
             </details>`).join('')}
         </div>
+      </div>
       </div>
     </article>`;
 
@@ -128,6 +140,7 @@
       ${PLAYERS.map(card).join('')}${next}
     </div>`;
 
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const track = root.querySelector('.voices-track');
   const arrows = root.querySelectorAll('.voices-arrow');
   const step = () => (track.querySelector('.voice-card') || {}).offsetWidth + 16 || 300;
@@ -140,9 +153,42 @@
   window.addEventListener('resize', update);
   update();
 
+  // Cards start closed, showing just the player's photo. Clicking the photo
+  // slides their story out to the right (below the photo on phones), and
+  // clicking again slides it back. The panel animates from whatever size it
+  // is now to the size it should end at, so a click mid-slide reverses smoothly.
+  function toggleStory(cardEl, open) {
+    const panel = cardEl.querySelector('.voice-panel');
+    const photo = cardEl.querySelector('.voice-photo');
+    const start = panel.getBoundingClientRect();
+    if (panel._slide) panel._slide.cancel();
+    cardEl.classList.toggle('is-open', open);
+    photo.setAttribute('aria-expanded', String(open));
+    panel.inert = !open;
+    if (reduceMotion) { update(); return; }
+    const end = panel.getBoundingClientRect();
+    const anim = panel.animate(
+      [{ width: start.width + 'px', height: start.height + 'px' }, { width: end.width + 'px', height: end.height + 'px' }],
+      { duration: open ? 620 : 420, easing: 'cubic-bezier(.25,.8,.25,1)' }
+    );
+    panel._slide = anim;
+    anim.onfinish = () => {
+      panel._slide = null;
+      update();
+      if (!open) return;
+      // Bring the whole opened story into view in the row.
+      const tr = track.getBoundingClientRect(), cr = cardEl.getBoundingClientRect();
+      if (cr.right > tr.right) track.scrollBy({ left: Math.min(cr.right - tr.right, cr.left - tr.left), behavior: 'smooth' });
+      else if (cr.left < tr.left) track.scrollBy({ left: cr.left - tr.left, behavior: 'smooth' });
+    };
+  }
+  root.querySelectorAll('.voice-photo').forEach((photo) => photo.addEventListener('click', () => {
+    const cardEl = photo.closest('.voice-card');
+    toggleStory(cardEl, !cardEl.classList.contains('is-open'));
+  }));
+
   // Answers slide open and closed smoothly. Only one answer is open at a
   // time per card, so opening a question slides the previous one shut.
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function slide(d, open) {
     const body = d.querySelector('.voice-ans');
     // Start from the answer's current height, so a click mid-slide reverses smoothly.
