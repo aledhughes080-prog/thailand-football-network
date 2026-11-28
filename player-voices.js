@@ -1,0 +1,120 @@
+/* ============================================================
+   PLAYER VOICES — player review cards on the homepage
+   Players who have made the move share their experience of playing
+   professionally in Asia. Each player gets a card (photo, details and
+   five questions & answers that open one at a time).
+
+   To add a player: copy one entry in PLAYERS below, change the details,
+   add their photo to assets/, and keep the same five questions.
+   Age is worked out from `dob`, so it stays correct every year.
+   ============================================================ */
+(function () {
+  'use strict';
+
+  const PLAYERS = [
+    {
+      name: 'Vincent Boesen',
+      dob: '1998-09-23',
+      nationality: 'German',
+      position: 'Centre forward',
+      team: 'Samui United FC',
+      league: 'Thai League 3',
+      photo: 'assets/vincent-boesen.jpg',
+      photoAlt: 'Vincent Boesen running with the ball in a white Samui United kit',
+      previously: 'Eintracht Trier, Alemannia Aachen, Rot-Weiss Oberhausen',
+      answers: [
+        'The connection came through a German coach who had previously tried to bring me to Thailand, two years ago. I wanted to have a completely new experience and grow as a person, far away from home.',
+        'It’s difficult to compare football here with that in Europe. For example the weather, the pitches, away trips, the food before the matches. You have to adapt, but I’m very happy to be playing for Samui. The club’s facilities are definitely top-tier. I actually spend most of my time with Tommy and Eman, which makes things a lot easier for me.',
+        'For me personally, moving to Thailand was definitely the best decision I’ve made so far. I’m very happy here, the quality of life on Samui is incredible. To be honest, I’d imagined it would be more difficult. My highlights so far have definitely been our home matches, the cup match against Chainat on my birthday – when I also scored – and our trip to Bangkok for a cup match.',
+        'Absolutely, especially for players who feel they’ve been stuck in a situation where they can’t progress any higher in their country or league. I felt the same way and would now like to take this opportunity, as I feel that my style of play could make me an interesting player here.',
+        'If you get the chance, go for it! Even if I had to leave Thailand again tomorrow, I can say it was the best decision of my life!'
+      ]
+    }
+  ];
+
+  // The same five questions are asked of every player.
+  const QUESTIONS = [
+    ['How did your move to Asia come about?', 'The opportunity, how they found the club, and what made them take the leap.'],
+    ['What’s life really like as a foreign footballer in Asia?', 'The football, the standard of the league, lifestyle, culture and routine.'],
+    ['Are you enjoying it, and has it lived up to your expectations?', 'Plus the biggest highlight so far.'],
+    ['Would you recommend playing football in Asia to other players?', ''],
+    ['What advice would you give a player considering the move?', '']
+  ];
+
+  const root = document.getElementById('player-voices');
+  if (!root) return;
+
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const age = (dob) => {
+    const b = new Date(dob + 'T00:00:00'), t = new Date();
+    let a = t.getFullYear() - b.getFullYear();
+    if (t.getMonth() < b.getMonth() || (t.getMonth() === b.getMonth() && t.getDate() < b.getDate())) a--;
+    return a;
+  };
+
+  const card = (p, i) => `
+    <article class="voice-card" aria-label="${esc(p.name)}">
+      <figure class="voice-photo"><img src="${esc(p.photo)}" alt="${esc(p.photoAlt)}" loading="lazy"><figcaption>${esc(p.team)}</figcaption></figure>
+      <div class="voice-body">
+        <div class="voice-kicker">Player story ${String(i + 1).padStart(2, '0')}</div>
+        <h3>${esc(p.name)}</h3>
+        <dl class="voice-facts">
+          <div><dt>Age</dt><dd>${age(p.dob)}</dd></div>
+          <div><dt>Nationality</dt><dd>${esc(p.nationality)}</dd></div>
+          <div><dt>Position</dt><dd>${esc(p.position)}</dd></div>
+          <div><dt>Current team</dt><dd>${esc(p.team)}${p.league ? `<small>${esc(p.league)}</small>` : ''}</dd></div>
+        </dl>
+        ${p.previously ? `<p class="voice-prev">Previously: ${esc(p.previously)}</p>` : ''}
+        <div class="voice-qa">
+          ${QUESTIONS.map(([q, hint], n) => `
+            <details${n === 0 ? ' open' : ''}>
+              <summary><span>${String(n + 1).padStart(2, '0')}</span>${esc(q)}</summary>
+              ${hint ? `<p class="voice-hint">${esc(hint)}</p>` : ''}
+              <blockquote>“${esc(p.answers[n])}”</blockquote>
+            </details>`).join('')}
+        </div>
+      </div>
+    </article>`;
+
+  const next = `
+    <article class="voice-card voice-next">
+      <div>
+        <div class="voice-kicker">More stories coming</div>
+        <h3>Played in Asia?<br><em>Share your story.</em></h3>
+        <p>We’re collecting honest accounts from players who have made the move, to help the next player decide.</p>
+        <button type="button" class="btn ghost" data-open="General Enquiry">Get in touch <span class="arrow">↗</span></button>
+      </div>
+    </article>`;
+
+  root.innerHTML = `
+    <div class="voices-head">
+      <div>
+        <div class="hero-kicker eyebrow"><span class="kicker-rule"></span> PLAYER VOICES</div>
+        <h2>Life in Asia, <em>in their words.</em></h2>
+      </div>
+      <div class="voices-nav">
+        <button type="button" class="voices-arrow" data-dir="-1" aria-label="Previous player">←</button>
+        <button type="button" class="voices-arrow" data-dir="1" aria-label="Next player">→</button>
+      </div>
+    </div>
+    <div class="voices-track" tabindex="0" aria-label="Player stories, scroll sideways for more">
+      ${PLAYERS.map(card).join('')}${next}
+    </div>`;
+
+  const track = root.querySelector('.voices-track');
+  const arrows = root.querySelectorAll('.voices-arrow');
+  const step = () => (track.querySelector('.voice-card') || {}).offsetWidth + 16 || 300;
+  arrows.forEach((b) => b.addEventListener('click', () => track.scrollBy({ left: step() * Number(b.dataset.dir), behavior: 'smooth' })));
+  const update = () => {
+    arrows[0].disabled = track.scrollLeft <= 4;
+    arrows[1].disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+  };
+  track.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+
+  // Only one answer open at a time per card, so each card stays a tidy size.
+  root.querySelectorAll('.voice-qa').forEach((qa) => qa.addEventListener('toggle', (e) => {
+    if (e.target.open) qa.querySelectorAll('details').forEach((d) => { if (d !== e.target) d.open = false; });
+  }, true));
+})();
