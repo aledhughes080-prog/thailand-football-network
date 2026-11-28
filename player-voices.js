@@ -6,6 +6,8 @@
 
    To add a player: copy one entry in PLAYERS below, change the details,
    add their photo to assets/, and keep the same five questions.
+   Optional: photoPosition (how the photo is cropped), photoCaption (if the
+   photo shows a different club from their current one), playedIn.
    Age is worked out from `dob`, so it stays correct every year.
    ============================================================ */
 (function () {
@@ -21,6 +23,7 @@
       league: 'Thai League 3',
       photo: 'assets/vincent-boesen.jpg',
       photoAlt: 'Vincent Boesen running with the ball in a white Samui United kit',
+      playedIn: 'Thailand',
       previously: 'Eintracht Trier, Alemannia Aachen, Rot-Weiss Oberhausen',
       answers: [
         'The connection came through a German coach who had previously tried to bring me to Thailand, two years ago. I wanted to have a completely new experience and grow as a person, far away from home.',
@@ -28,6 +31,27 @@
         'For me personally, moving to Thailand was definitely the best decision I’ve made so far. I’m very happy here, the quality of life on Samui is incredible. To be honest, I’d imagined it would be more difficult. My highlights so far have definitely been our home matches, the cup match against Chainat on my birthday – when I also scored – and our trip to Bangkok for a cup match.',
         'Absolutely, especially for players who feel they’ve been stuck in a situation where they can’t progress any higher in their country or league. I felt the same way and would now like to take this opportunity, as I feel that my style of play could make me an interesting player here.',
         'If you get the chance, go for it! Even if I had to leave Thailand again tomorrow, I can say it was the best decision of my life!'
+      ]
+    },
+    {
+      name: 'Marko Ivanović',
+      dob: '1995-06-30',
+      nationality: 'Montenegrin',
+      position: 'Centre back',
+      team: 'Club Eagles',
+      league: 'Dhivehi Premier League, Maldives',
+      photo: 'assets/marko-ivanovic.jpg',
+      photoPosition: 'center 15%',
+      photoCaption: 'Gresik United · Indonesia',
+      photoAlt: 'Marko Ivanović in a yellow Gresik United kit',
+      playedIn: 'Maldives, Cambodia, Nepal, Bhutan, Indonesia',
+      previously: 'Paro FC (Bhutan), PSIS Semarang (Indonesia), Swieqi United (Malta)',
+      answers: [
+        'I was playing for many years in Malta, and I was looking to move on. I was really interested in moving to Asia, so I started contacting agents to try to get something. My first move in Asia was actually to Mongolia, with champions FC Ulaanbaatar City, but because of COVID I never travelled there. A couple of months later I got the opportunity to play in the Maldives Premier League and I took it. It definitely wasn’t easy: a new culture and a new view on football, but I adapted quickly. After that I continued my journey in Asia in Cambodia, Nepal, Bhutan and Indonesia.',
+        'As a foreigner in Asia, you have more responsibility and more pressure. In most countries the foreign-player quota is limited, so you need to show and prove every day that you deserve to be there. The level of football can’t really be described, because it’s a totally different style from what we are used to in Europe. The tactical approach, tempo, positioning, defensive organisation and decision-making are not always the same as in European football. What works in Europe doesn’t necessarily work in Asia, and players need to get used to that so they can succeed and stay here for a long time if they like it. I like the lifestyle here, as it’s more relaxed, and the weather is definitely better than in most countries in Europe.',
+        'I definitely enjoy my time in Asia. There have been many ups and downs, but overall I’m happy. My biggest highlight for sure was playing in the AFC Challenge League with Paro FC, the first time in the history of the club, and of the country as well.',
+        'Yes. But I would definitely explain the advantages and disadvantages, because it’s important that players have at least some idea of where they are going. I think this is really important.',
+        'Come with an open mind and be ready to adapt. The football culture, tactics and the way the game is played can be very different from Europe, so don’t expect everything to work the same way. Show respect for the local players, the culture and the country that welcomes you. Support your teammates, share your experience, and understand that you are not here just to make yourself better, but to help everyone around you improve. And one last thing: the memories you create, the people you meet and the experiences you gain along the way are treasures that football will give you long after your career is over.'
       ]
     }
   ];
@@ -54,7 +78,7 @@
 
   const card = (p, i) => `
     <article class="voice-card" aria-label="${esc(p.name)}">
-      <figure class="voice-photo"><img src="${esc(p.photo)}" alt="${esc(p.photoAlt)}" loading="lazy"><figcaption>${esc(p.team)}</figcaption></figure>
+      <figure class="voice-photo"><img src="${esc(p.photo)}" alt="${esc(p.photoAlt)}" loading="lazy"${p.photoPosition ? ` style="object-position:${esc(p.photoPosition)}"` : ''}><figcaption>${esc(p.photoCaption || p.team)}</figcaption></figure>
       <div class="voice-body">
         <div class="voice-kicker">Player story ${String(i + 1).padStart(2, '0')}</div>
         <h3>${esc(p.name)}</h3>
@@ -64,6 +88,7 @@
           <div><dt>Position</dt><dd>${esc(p.position)}</dd></div>
           <div><dt>Current team</dt><dd>${esc(p.team)}${p.league ? `<small>${esc(p.league)}</small>` : ''}</dd></div>
         </dl>
+        ${p.playedIn ? `<p class="voice-played"><span>Played in Asia</span>${p.playedIn.split(/,\s*/).map((c) => `<b>${esc(c)}</b>`).join('')}</p>` : ''}
         ${p.previously ? `<p class="voice-prev">Previously: ${esc(p.previously)}</p>` : ''}
         <div class="voice-qa">
           ${QUESTIONS.map(([q, hint], n) => `

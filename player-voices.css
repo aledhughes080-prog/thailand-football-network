@@ -24,7 +24,8 @@
 .voice-facts dt{font-size:8.5px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:#98aaa0}
 .voice-facts dd{margin:5px 0 0;font-size:14px;font-weight:700;letter-spacing:-.02em}
 .voice-facts dd small{display:block;font-size:10.5px;font-weight:500;color:#b7c8be;margin-top:2px;letter-spacing:0}
-.voice-prev{font-size:11px;color:#98aaa0;margin:12px 0 0;line-height:1.6}
+.voice-played{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:14px 0 0}.voice-played span{font-size:8.5px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:#98aaa0;margin-right:4px}.voice-played b{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:5px 8px;border:1px solid rgba(212,185,140,.5);color:var(--gold)}
+.voice-prev{font-size:11px;color:#98aaa0;margin:10px 0 0;line-height:1.6}
 .voice-qa{margin-top:16px}
 .voice-qa details{border-bottom:1px solid rgba(255,255,255,.12)}
 .voice-qa summary{cursor:pointer;list-style:none;display:flex;gap:14px;align-items:baseline;padding:13px 28px 13px 0;position:relative;font-size:13px;font-weight:800;letter-spacing:-.01em;line-height:1.45}
